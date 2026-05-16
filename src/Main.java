@@ -32,7 +32,8 @@ public class Main {
             System.out.println("6 - Mostrar produtos em ordem alfabética");
             System.out.println("7 - Mostrar produto mais caro");
             System.out.println("8 - Mostrar produto mais barato");
-            System.out.println("9 - Sair");
+            System.out.println("9 - Mostrar produto por categoria");
+            System.out.println("10 - Sair");
             try {
                 switch (sc.nextInt()) {
                     case 1:
@@ -129,8 +130,27 @@ public class Main {
                         Produtos pMinimo = produtos.stream().min((p1, p2) -> p1.getPreco().compareTo(p2.getPreco())).get();
                         System.out.println("O produto mais barato da lista é " + pMinimo);
                         break;
-
                     case 9:
+                        System.out.println("Buscar produtos por categoria ");
+                        sc.nextLine();
+                        String buscaCategoria = sc.nextLine();
+
+                        if (buscaCategoria.isBlank()){
+                            throw new DomainException("Categoria não pode ficar vazia ");
+                        }
+                        List<Produtos> filtroCategoria = produtos.stream()
+                                .filter(p -> p.getCategoria().equalsIgnoreCase(buscaCategoria)).toList();
+
+
+                        if (filtroCategoria.isEmpty()) {
+                            throw new DomainException("Nenhum produto encontrado nessa categoria. ");
+                        }
+                            filtroCategoria.forEach(System.out::println);
+
+                        break;
+
+
+                    case 10:
                         System.out.println("Saindo . . . . . . . . . ");
                         x = false;
                         break;
